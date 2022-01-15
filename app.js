@@ -1,5 +1,18 @@
-function titleCaseString(str) {
-  return str[0].toUpperCase() + str.slice(1).toLowerCase();
+"use strict";
+
+function updateScore(result) {
+  if (result === "win") {
+    playerScore += 1;
+  } else if (result === "loose") {
+    computerScore += 1;
+  }
+}
+
+function computerPlay() {
+  //return random computer choice
+  const options = ["Rock", "Paper", "Scissors"];
+  const randomChoice = Math.floor(Math.random() * 3);
+  return options[randomChoice];
 }
 
 function getRoundResult(playerSelection, computerSelection) {
@@ -28,70 +41,92 @@ function getRoundResult(playerSelection, computerSelection) {
   return result[playerSelection][computerSelection];
 }
 
-function computerPlay() {
-  //return random computer choice
-  const options = ["Rock", "Paper", "Scissors"];
-  const randomChoice = Math.floor(Math.random() * 3);
-  return options[randomChoice];
-}
-
-function updateScore(result) {
-  if (result === "win") {
-    playerScore += 1;
-  } else if (result === "loose") {
-    computerScore += 1;
-  }
-}
-
-function playRound(playerSelection, computerSelection) {
-  //play a single round
-  result = getRoundResult(playerSelection, computerSelection);
-
+function processResult(result, playerSelection, computerSelection) {
+  //process player win, loose, or draw
   if (result === "draw") {
-    return "It'str a draw!";
+    resultText.textContent = "It's a draw!";
   } else if (result === "win") {
     updateScore(result);
-    return "You win!";
+    resultText.textContent = `You Win! ${playerSelection} beats ${computerSelection}.`;
   } else {
     updateScore(result);
-    return `You loose! ${computerSelection} beats ${titleCaseString(
-      playerSelection
-    )}.`;
+    resultText.textContent = `You loose! ${computerSelection} beats ${playerSelection}.`;
   }
 }
 
 function showScore() {
-  console.log(`Score: You = ${playerScore}, Computer = ${computerScore}`);
+  const player = document.querySelector(".player-score");
+  const computer = document.querySelector(".computer-score");
+
+  player.textContent = `Your score: ${playerScore}`;
+  computer.textContent = `Computer score: ${computerScore}`;
 }
 
-function getOverallResult() {
-  //return the overall result after all rounds completed
-  if (playerScore > computerScore) {
-    return "You won!";
-  } else if (playerScore < computerScore) {
-    return "You lost!";
-  }
-  return "It was a draw!";
+function checkGameOver() {
+  return playerScore >= 5 || computerScore >= 5;
 }
 
-function game(numRounds) {
-  // play game for set amount of rounds
-  for (let i = 0; i < numRounds; i++) {
-    const playerSelection = prompt("Enter your selection: ");
+function getWinner() {
+  return playerScore > computerScore ? "You" : "the computer";
+}
 
-    computerSelection = computerPlay();
-    console.log(`Round: ${i + 1}`);
-    console.log(`You chose: ${titleCaseString(playerSelection)}`);
-    console.log(`The computer chose: ${computerSelection}`);
-    console.log(playRound(playerSelection, computerSelection));
-    showScore();
-    console.log("\n");
+function loadReplay() {
+  //create option to replay game
+  const replay = document.createElement("span");
+  replay.textContent = "Replay?";
+  replay.style.textDecoration = "underline";
+
+  replay.addEventListener("mouseover", (e) => {
+    e.target.style.color = "skyblue";
+    e.target.style.cursor = "pointer";
+  });
+
+  replay.addEventListener("mouseleave", (e) => {
+    e.target.style.color = "#333";
+  });
+
+  replay.addEventListener("click", () => {
+    location.reload();
+  });
+
+  gameOverText.appendChild(replay);
+}
+
+function showGameOver() {
+  gameOverText.textContent = `Game over...${getWinner()} won. `;
+  loadReplay();
+}
+
+function playRound(event) {
+  //play a single round
+
+  const computerSelection = computerPlay();
+  const playerSelection = event.target.textContent;
+
+  playerText.textContent = `You chose: ${playerSelection}`;
+  computerText.textContent = `The computer chose: ${computerSelection}`;
+
+  const result = getRoundResult(playerSelection, computerSelection);
+  processResult(result, playerSelection, computerSelection);
+  showScore();
+  if (checkGameOver()) {
+    showGameOver();
+    buttons.forEach((button) => button.removeEventListener("click", playRound));
   }
-  console.log("Game Over.");
-  console.log(getOverallResult());
+}
+
+function play() {
+  showScore();
+  buttons.forEach((button) => button.addEventListener("click", playRound));
 }
 
 let playerScore = 0;
 let computerScore = 0;
 
-game(5);
+const playerText = document.querySelector(".player-text");
+const computerText = document.querySelector(".computer-text");
+const resultText = document.querySelector(".result-text");
+const gameOverText = document.querySelector(".gameover-text");
+const buttons = document.querySelectorAll("button");
+
+play();
