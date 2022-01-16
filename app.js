@@ -1,11 +1,8 @@
 "use strict";
 
 function updateScore(result) {
-  if (result === "win") {
-    playerScore += 1;
-  } else if (result === "loose") {
-    computerScore += 1;
-  }
+  if (result === "win") playerScore += 1;
+  else if (result === "loose") computerScore += 1;
 }
 
 function computerPlay() {
