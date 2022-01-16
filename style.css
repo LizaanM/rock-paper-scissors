@@ -32,6 +32,9 @@ button:hover {
   background-color: lightblue;
 }
 
+button:active {
+  transform: scale(1.05);
+}
 .buttons {
   display: flex;
   justify-content: space-between;
