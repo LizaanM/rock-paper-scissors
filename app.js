@@ -42,13 +42,14 @@ function processResult(result, playerSelection, computerSelection) {
   //process player win, loose, or draw
   if (result === "draw") {
     resultText.textContent = "It's a draw!";
-  } else if (result === "win") {
-    updateScore(result);
+    return;
+  }
+  if (result === "win") {
     resultText.textContent = `You Win! ${playerSelection} beats ${computerSelection}.`;
-  } else {
-    updateScore(result);
+  } else if (result === "loose") {
     resultText.textContent = `You loose! ${computerSelection} beats ${playerSelection}.`;
   }
+  updateScore(result);
 }
 
 function showScore() {
@@ -98,6 +99,7 @@ function playRound(event) {
   const result = getRoundResult(playerSelection, computerSelection);
   processResult(result, playerSelection, computerSelection);
   showScore();
+
   if (checkGameOver()) {
     showGameOver();
     buttons.forEach((button) => button.removeEventListener("click", playRound));
