@@ -47,7 +47,7 @@ function processResult(result, playerSelection, computerSelection) {
 
   let text = null;
   if (result === "win") {
-    text = `You Win! ${playerSelection} beats ${computerSelection}.`;
+    text = `You win! ${playerSelection} beats ${computerSelection}.`;
   } else if (result === "loose") {
     text = `You loose! ${computerSelection} beats ${playerSelection}.`;
   }
