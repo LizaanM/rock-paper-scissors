@@ -64,7 +64,7 @@ function checkGameOver() {
 }
 
 function getWinner() {
-  return playerScore > computerScore ? "You" : "the computer";
+  return playerScore > computerScore ? "you" : "the computer";
 }
 
 function loadReplay() {
