@@ -74,7 +74,7 @@ function loadReplay() {
   //create option to replay game
   const replay = document.createElement("span");
   replay.textContent = "Replay?";
-  replay.style.color = "deepskyblue";
+  replay.style.color = "#50bbff";
   replay.style.cursor = "pointer";
 
   replay.addEventListener("click", () => {
