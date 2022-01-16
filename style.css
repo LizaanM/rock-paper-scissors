@@ -1,6 +1,10 @@
+body {
+  display: flex;
+  justify-content: center;
+  margin-top: 20vh;
+}
+
 .game {
-  width: 350px;
-  margin: 150px auto 0;
   font-family: arial, sans-serif;
   color: #333;
 }
