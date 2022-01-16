@@ -44,11 +44,14 @@ function processResult(result, playerSelection, computerSelection) {
     resultText.textContent = "It's a draw!";
     return;
   }
+
+  let text = null;
   if (result === "win") {
-    resultText.textContent = `You Win! ${playerSelection} beats ${computerSelection}.`;
+    text = `You Win! ${playerSelection} beats ${computerSelection}.`;
   } else if (result === "loose") {
-    resultText.textContent = `You loose! ${computerSelection} beats ${playerSelection}.`;
+    text = `You loose! ${computerSelection} beats ${playerSelection}.`;
   }
+  resultText.textContent = text;
   updateScore(result);
 }
 
