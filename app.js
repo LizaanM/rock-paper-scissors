@@ -74,16 +74,8 @@ function loadReplay() {
   //create option to replay game
   const replay = document.createElement("span");
   replay.textContent = "Replay?";
-  replay.style.textDecoration = "underline";
-
-  replay.addEventListener("mouseover", (e) => {
-    e.target.style.color = "skyblue";
-    e.target.style.cursor = "pointer";
-  });
-
-  replay.addEventListener("mouseleave", (e) => {
-    e.target.style.color = "#333";
-  });
+  replay.style.color = "deepskyblue";
+  replay.style.cursor = "pointer";
 
   replay.addEventListener("click", () => {
     location.reload();
